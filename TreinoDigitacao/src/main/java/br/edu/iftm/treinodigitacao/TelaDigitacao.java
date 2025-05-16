@@ -17,7 +17,7 @@ import javax.swing.SwingUtilities;
  * @author jhonn
  */
 public class TelaDigitacao extends javax.swing.JFrame {
-    private static final String teclasPossiveis = "\t\n~1234567890+-QWERTYUIOP[]\\ASDFGHJKL:*ZXCVBNM,.?^<>v ";
+    private static final String teclasPossiveis = "\t\n'1234567890+-QWERTYUIOP[]\\ASDFGHJKL:*ZXCVBNM,.?^<>v ";
     /**
      * Creates new form TelaDigitacao
      */
@@ -122,10 +122,10 @@ public class TelaDigitacao extends javax.swing.JFrame {
             }
         });
 
-        entradaTexto.setEditable(false);
         entradaTexto.setBackground(new java.awt.Color(255, 255, 255));
         entradaTexto.setColumns(20);
         entradaTexto.setForeground(new java.awt.Color(0, 0, 0));
+        entradaTexto.setLineWrap(true);
         entradaTexto.setRows(5);
         entradaTexto.setCaretColor(new java.awt.Color(0, 0, 0));
         entradaTexto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -307,7 +307,7 @@ public class TelaDigitacao extends javax.swing.JFrame {
 
             tiu.setBackground(java.awt.Color.darkGray);
             tiu.setForeground(new java.awt.Color(255, 255, 255));
-            tiu.setText("~");
+            tiu.setText("'");
 
             n1.setBackground(java.awt.Color.darkGray);
             n1.setForeground(new java.awt.Color(255, 255, 255));
@@ -587,13 +587,13 @@ public class TelaDigitacao extends javax.swing.JFrame {
         int codigo = evt.getKeyCode();
         switch (codigo){
             case KeyEvent.VK_TAB:
-                destacarTeclaDif("TAB");
+                TAB.setBackground(Color.BLUE);
                 break;
             case KeyEvent.VK_ENTER:
-                destacarTeclaDif("ENTER");
+                ENTER.setBackground(Color.BLUE);
                 break;
             case KeyEvent.VK_BACK_SPACE:
-                destacarTeclaDif("BACKSPACE");
+                BACKSPACE.setBackground(Color.BLUE);
                 String temp = entradaTexto.getText();
                 if(!temp.isEmpty()){
                     temp = temp.substring(0, temp.length() - 1);
@@ -601,33 +601,30 @@ public class TelaDigitacao extends javax.swing.JFrame {
                 }
                 break;
             case KeyEvent.VK_SPACE:
-                destacarTeclaDif("SPACE");
+                SPACE.setBackground(Color.BLUE);
                 break;
             case KeyEvent.VK_CAPS_LOCK:
-                destacarTeclaDif("CAPS");
+                boolean capslock = Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
+                CAPS.setBackground(capslock ? Color.blue : Color.DARK_GRAY);
                 break;
             case KeyEvent.VK_SHIFT:
-                destacarTeclaDif("SHIFT");
-                break;
-            case KeyEvent.VK_DEAD_TILDE:
-                destacarTeclaDif("~");
+                SHIFT.setBackground(Color.BLUE);
                 break;
             case KeyEvent.VK_UP:
-                destacarTeclaDif("^");
+                setaCima.setBackground(Color.BLUE);
                 break;
             case KeyEvent.VK_DOWN:
-                destacarTeclaDif("SETA_BAIXO");
+                setaBaixo.setBackground(Color.BLUE);
                 break;
             case KeyEvent.VK_RIGHT:
-                destacarTeclaDif(">");
+                setaDireita.setBackground(Color.BLUE);
                 break;
             case KeyEvent.VK_LEFT:
-                destacarTeclaDif("<");
+                setaEsquerda.setBackground(Color.BLUE);
                 break;
             default:
                 destacarTecla(tecla);
         }
-        
     }//GEN-LAST:event_panelPrincipalKeyPressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -671,23 +668,6 @@ public class TelaDigitacao extends javax.swing.JFrame {
                 String textoDoBotao = botao.getText();
                 if(textoDoBotao.equals(String.valueOf(tecla))){
                     botao.setBackground(Color.blue);
-                    break;
-                }
-            }
-        }
-    }
-    public void destacarTeclaDif(String nomeDoBotao){
-        boolean capslock = Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
-        for(Component c : panelPrincipal.getComponents()){
-            if(c instanceof JButton){
-                JButton botao = (JButton) c;
-                String comando = botao.getActionCommand();
-                if((comando != null && nomeDoBotao.equalsIgnoreCase(comando))||(comando == null && botao.getText().equalsIgnoreCase(nomeDoBotao))){
-                    if("CAPS".equalsIgnoreCase(botao.getText())){
-                        botao.setBackground(capslock ? Color.blue : Color.DARK_GRAY);
-                    }else{
-                    botao.setBackground(Color.blue);
-                    }
                     break;
                 }
             }
